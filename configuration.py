@@ -1,7 +1,8 @@
 from utils.dbconfig import dbconfig  # importing the function creating a database
 import sys  # Imported for the use of sys.exit()
 import getpass  # Imported to be able to get a password input without displaying it
-import bcrypt  # Imported for strong password encrpyting
+
+import bcrypt  # Imported for strong password encrypting
 
 # Importing rich for neater display
 from rich import print as printc
@@ -10,7 +11,7 @@ from rich.console import Console
 console = Console()
 
 
-# Defining a function to hash a given password
+# Defining a function to hash the master password
 def hash_pass(password):
     password_bytes = password.encode('utf-8')  # Converting the password to bytes in order to encrypt it
     hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())  # hashing the password with a bcrypt generated salt
@@ -71,6 +72,7 @@ def config():
     printc("[green][+][/green] The password has been added to the database")
     printc("[green][+] Configuration done![/green]")
 
+    cursor.close()
     db.close()
 
 
