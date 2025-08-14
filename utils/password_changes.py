@@ -15,7 +15,15 @@ key = os.getenv("fernet_key")  # Pulling the encryption key generated using Fern
 f = Fernet(key)  # Creating a Fernet encryption object to execute actions like encrypt() or decrypt()
 
 
-# Creating a function to crypt a given password
+
+# Defining a function to hash the master password
+def hash_masterpass(password):
+    password_bytes = password.encode('utf-8')  # Converting the password to bytes in order to encrypt it
+    hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())  # hashing the password with a bcrypt generated salt
+    return hashed.decode('utf-8')  # Returning the hashed password as a string so that  it can be stored in the db
+
+
+# Creating a function to crypt a given password, will be used for the masterpass
 def encrypt_pass(p):
     # We turn the string into bytes using .encode() and then encrypt it
     encrypted = f.encrypt(p.encode())
@@ -36,15 +44,17 @@ def input_validate_masterpass():
 
     db = dbconfig()  # Connecting to db
     cursor = db.cursor()
-    query = "SELECT * FROM pm.secrets"  # Getting the master password from the 'secrets' table
+    query = "SELECT masterpass_hash FROM pm.secrets LIMIT 1"  # Getting the master password from the 'secrets' table
     try:
         cursor.execute(query)  # Executing query
-        results = cursor.fetchall()  # Storing and returning the master password
+        results = cursor.fetchone()  # Saving the master password to a variable
+        password = results[0]
     except Exception as e:
         printc("An error occurred when trying to get the password from the db")
         return False
-    if bcrypt.checkpw(master_password_bytes, results.encode()):  # Verifying the password
+    if bcrypt.checkpw(master_password_bytes, password.encode()):  # Verifying the password
         printc("Password correct")
         return True
     printc("Password incorrect")  # In case the password is incorrect the function notifies the user and returns 'False'
     return False
+

@@ -8,14 +8,9 @@ import bcrypt  # Imported for strong password encrypting
 from rich import print as printc
 from rich.console import Console
 
+from utils.password_changes import hash_masterpass
+
 console = Console()
-
-
-# Defining a function to hash the master password
-def hash_pass(password):
-    password_bytes = password.encode('utf-8')  # Converting the password to bytes in order to encrypt it
-    hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())  # hashing the password with a bcrypt generated salt
-    return hashed.decode('utf-8')  # Returning the hashed password as a string so that  it can be stored in the db
 
 
 def config():
@@ -61,7 +56,7 @@ def config():
             printc("[yellow][-] The passwords do not match, please try again. [/yellow]")
 
     # Using the previously created function to hash the password before inserting it
-    hashed_mp = hash_pass(mp)
+    hashed_mp = hash_masterpass(mp)
 
     # Inserting the hashed password to the secrets table
     query = "INSERT INTO pm.secrets (masterpass_hash) values (%s)"
