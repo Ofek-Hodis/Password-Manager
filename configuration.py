@@ -2,13 +2,11 @@ from utils.dbconfig import dbconfig  # importing the function creating a databas
 import sys  # Imported for the use of sys.exit()
 import getpass  # Imported to be able to get a password input without displaying it
 
-import bcrypt  # Imported for strong password encrypting
-
 # Importing rich for neater display
 from rich import print as printc
 from rich.console import Console
 
-from utils.password_changes import hash_masterpass
+from utils.password_changes import hash_masterpass  # Importing the function created to hash the master password
 
 console = Console()
 
@@ -31,7 +29,7 @@ def config():
     #  VARCHAR is more efficient than TEXT NOT NULL, and the hashed password will never be too long for it
     query = ("CREATE TABLE IF NOT EXISTS pm.secrets (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, masterpass_hash "
              "VARCHAR(100))")
-    res = cursor.execute(query)  # storing the results of the execution of the query
+    res = cursor.execute(query)  # storing the results of the query if we want to use it for debugging
     printc("[green][+][/green] Table 'secrets' created")
 
     # Create a table to store passwords and relevant information, with an id column (if it does not exist already)
@@ -41,7 +39,7 @@ def config():
              "siteurl TEXT NOT NULL, "
              "email VARCHAR(254), username VARCHAR(100), "
              "password TEXT NOT NULL)")
-    res = cursor.execute(query)  # storing the results of the execution of the query
+    res = cursor.execute(query)  # storing the results of the query if we want to use it for debugging
     printc("[green][+][/green] Table 'entries' created")
 
     while True:  # Infinite loop to get two identical password inputs
@@ -54,7 +52,6 @@ def config():
             printc("[yellow][-] The password can not be empty, please try again. [/yellow]")
         else:
             printc("[yellow][-] The passwords do not match, please try again. [/yellow]")
-
     # Using the previously created function to hash the password before inserting it
     hashed_mp = hash_masterpass(mp)
 

@@ -17,10 +17,10 @@ def add_entry(sitename, siteurl, email, username):
 
     # Storing the values and encrypting the password
     val = sitename, siteurl, email, username, encrypt_pass(password)
-    cursor.execute(query, val)
-    db.commit()
+    cursor.execute(query, val)  # Execution of query
+    db.commit()  # Saving changes to database
 
     printc("[green][+][/green] Entry added successfully")
 
-    cursor.close()
+    cursor.close()  #Closing the cursor and the db after interacting with it
     db.close()
