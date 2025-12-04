@@ -7,6 +7,7 @@ from utils.password_changes import input_validate_masterpass  # Importing the fu
 from utils.generate import gen_pass  # Importing the function to generate the password
 import utils.add  # Importing the function to add an entry
 import utils.retrieve  # Importing the function to retrieve entries
+import utils.delete  # Importing function to delete
 
 import pyperclip  # Importing pyperclip to allow copying and pasting text to the clipboard
 
@@ -14,7 +15,7 @@ import pyperclip  # Importing pyperclip to allow copying and pasting text to the
 parser = argparse.ArgumentParser(description='Description', allow_abbrev=False)
 
 # Definition of the arguments to allow interaction between the user and the program
-parser.add_argument('option', help='(a)dd / (e)xtract / (g)enerate')
+parser.add_argument('option', help='(a)dd / (e)xtract / (g)enerate / (d)elete')
 parser.add_argument("-s", "--site", help="Site name")
 parser.add_argument("-u", "--url", help="Site URL")
 parser.add_argument("-e", "--email", help="Email")
@@ -71,6 +72,15 @@ def main():
         password = utils.generate.gen_pass(args.length)
         pyperclip.copy(password)  # copying the password to the system clipboard
         printc("[green][+][/green] Password generated and copied to clipboard")
+
+    if args.option in ["delete", "d"]:  # If the user wants to add an entry
+        if args.site is None:
+            printc("[red][!][/red] Site name (-s) required")
+        if args.login is None:
+            printc("[red][!][/red] Site login (-l) required")
+
+        utils.delete.delete_entry(args.site, args.login) 
+
 
 if __name__ == "__main__":  # Making sure the function is called only if this module is called directly, and not when imported
     main()
