@@ -15,7 +15,6 @@ key = os.getenv("fernet_key")  # Pulling the encryption key generated using Fern
 f = Fernet(key)  # Creating a Fernet encryption object to execute actions like encrypt() or decrypt()
 
 
-
 # Defining a function to hash the master password
 def hash_masterpass(password):
     password_bytes = password.encode('utf-8')  # Converting the password to bytes in order to encrypt it
