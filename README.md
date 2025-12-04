@@ -38,22 +38,28 @@ to finish, reinforcing both my programming skills and understanding of cybersecu
 ---
 
 ## Installation
-- run git clone https://github.com/Ofek-Hodis/Password-Manager in your chosen file location
+- run `git clone https://github.com/Ofek-Hodis/Password-Manager` in your chosen file location
 - create a '.env' file named "secret_data.env" containing:
     DB_HOST=your_host<br>
     DB_USER=your_user<br>
     DB_PASSWORD=your_db_password<br>
-    FERNET_KEY=your_generated_key (run in command line utils/key_gen_private.py, meant to be used once for key generation)<br>
+    FERNET_KEY=your_generated_key (run in command line `utils/key_gen_private.py`, meant to be used once for key generation)<br>
 - install relevant modules (according to the "programs used section")
 - install MySQL server:
     Create root user and root password (must be stored)<br>
-    Run in the command line "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p (or the relevant file location)<br>
+    Run in the command line `"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe"` -u root -p (or the relevant file location)<br>
     Run the following lines in the command line to create a new user:<br>
-    CREATE DATABASE IF NOT EXISTS password_manager CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;<br>
-    CREATE USER IF NOT EXISTS 'appuser'@'localhost' IDENTIFIED BY 'StrongPassword123!'; (choose your name and password for the user)<br> 
-    GRANT ALL PRIVILEGES ON password_manager.* TO 'appuser'@'localhost';<br>
-    FLUSH PRIVILEGES;<br>
-    USE password_manager;<br>
+        `CREATE DATABASE IF NOT EXISTS password_manager CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;`<br>
+        `CREATE USER IF NOT EXISTS 'appuser'@'localhost' IDENTIFIED BY 'StrongPassword123!';` (choose your name and password for the user)<br> 
+        `GRANT ALL PRIVILEGES ON  *.* TO 'appuser'@'localhost';`<br>
+        `FLUSH PRIVILEGES;`<br>
+        `USE password_manager;`<br>
+
+---
+
+## Set up (after installation)
+- Run `python configuration.py` in the command line (in the password-manager install location)
+- Choose a master password (Write it down! It will be used to access your information)
 
 ---
 
