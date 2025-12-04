@@ -5,10 +5,12 @@ It lets you store, retrieve, search, and generate credentials while keeping them
 ---
 
 ## Personal Summary
-This password manager allowed me to gain practical experience with Python programming and MySQL database integration.
-I implemented secure password storage using different encryption and hashing techniques, and learned to handle sensitive data safely.
-The project also taught me how to use various Python modules effectively, manage errors, and build a functional application from start
-to finish, reinforcing both my programming skills and understanding of cybersecurity concepts.
+This password manager allowed me to gain practical experience with Python programming and MySQL database integration.<br>
+I implemented secure password storage using different encryption and hashing techniques, and learned to handle sensitive data safely.<br>
+The project also taught me how to use various Python modules effectively, manage errors, and build a functional application from start<br>
+to finish, reinforcing both my programming skills and understanding of cybersecurity concepts.<br>
+
+---
 
 ## Features
 - **Store credentials**: Site name, URL, email, username, password.
@@ -24,26 +26,34 @@ to finish, reinforcing both my programming skills and understanding of cybersecu
 
 ## Programs used
 - Python 3.9
-- MySQL server ran locally
-- '.env' file containing:
-    DB_HOST=your_host
-    DB_USER=your_user
-    DB_PASSWORD=your_db_password
-    FERNET_KEY=your_generated_key (using utils/generate.py, meant to be used once for key generation)
+- MySQL 8.0.44.0 server ran locally
 - The following modules installed (by using pip install module_name):
-    rich
-    bcrypt
-    fernet
-    mysql-connector
-    pyperclip
-    python-dotenv
+    rich<br>
+    bcrypt<br>
+    fernet<br>
+    mysql-connector<br>
+    pyperclip<br>
+    python-dotenv<br>
 
 ---
 
 ## Installation
-- install the relevant programs and modules
-- Create said '.env' file
-- git clone https://github.com/Ofek-Hodis/Password-Manager
+- run git clone https://github.com/Ofek-Hodis/Password-Manager in your chosen file location
+- create a '.env' file named "secret_data.env" containing:
+    DB_HOST=your_host<br>
+    DB_USER=your_user<br>
+    DB_PASSWORD=your_db_password<br>
+    FERNET_KEY=your_generated_key (run in command line utils/key_gen_private.py, meant to be used once for key generation)<br>
+- install relevant modules (according to the "programs used section")
+- install MySQL server:
+    Create root user and root password (must be stored)<br>
+    Run in the command line "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p (or the relevant file location)<br>
+    Run the following lines in the command line to create a new user:<br>
+    CREATE DATABASE IF NOT EXISTS password_manager CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;<br>
+    CREATE USER IF NOT EXISTS 'appuser'@'localhost' IDENTIFIED BY 'StrongPassword123!'; (choose your name and password for the user)<br> 
+    GRANT ALL PRIVILEGES ON password_manager.* TO 'appuser'@'localhost';<br>
+    FLUSH PRIVILEGES;<br>
+    USE password_manager;<br>
 
 ---
 
@@ -52,7 +62,7 @@ python main.py command (or -shortened command) --option additional information
 Examples:
   - Generate a 16-character password:
     python main.py generate --length 16
-  - Add information to the db:
+  - Add information to the db:<db>
     python main.py add -s GitHub -u https://github.com/ -l Ofek-Hodis -e ofkhod@gmail.com
     * For the add function, entering the site (represented by -s or --site), the url (-u or --url) and the username (-l or --login) is required. The email (-e or --email) is optional.
     * After choosing information the password input will be safely prompted, and then hashed before stored.
@@ -60,7 +70,7 @@ Examples:
 ---
 
 ## Security notes
-The master password cannot be encrypted, as it was crpyted using bcrypt. It must be remembered or stored somewhere secure.
+The master password cannot be encrypted, as it was crpyted using bcrypt. It must be remembered or stored somewhere secure.<br>
 User passwords can be decrypted only using the key generated using utils/generate.py and stored in the '.env' file localy. Passwords only be encrypted using this key to allow decryption.
 
 
