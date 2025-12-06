@@ -15,7 +15,7 @@ import pyperclip  # Importing pyperclip to allow copying and pasting text to the
 parser = argparse.ArgumentParser(description='Description', allow_abbrev=False)
 
 # Definition of the arguments to allow interaction between the user and the program
-parser.add_argument('option', help='(a)dd / (e)xtract / (g)enerate / (d)elete')
+parser.add_argument('option', help='(a)dd / (e)xtract / (g)enerate / (d)elete / (u)sage')
 parser.add_argument("-s", "--site", help="Site name")
 parser.add_argument("-u", "--url", help="Site URL")
 parser.add_argument("-e", "--email", help="Email")
@@ -46,6 +46,7 @@ def main():
         else:
             printc("[red][!][/red] Incorrect password")
 
+
     if args.option in ["extract", "e"]:  # if the user wants to retrieve data
         printc("Extracting")
         if not utils.password_changes.input_validate_masterpass():  # Checking the master pass
@@ -64,6 +65,7 @@ def main():
 
         utils.retrieve.retrieve_entry(search)  # Retrieving an entry
 
+
     if args.option in ["generate", "g"]:
         printc("Generating")
         if args.length < 1:
@@ -73,13 +75,22 @@ def main():
         pyperclip.copy(password)  # copying the password to the system clipboard
         printc("[green][+][/green] Password generated and copied to clipboard")
 
+
     if args.option in ["delete", "d"]:  # If the user wants to add an entry
         if args.site is None:
             printc("[red][!][/red] Site name (-s) required")
         if args.login is None:
             printc("[red][!][/red] Site login (-l) required")
 
-        utils.delete.delete_entry(args.site, args.login) 
+        utils.delete.delete_entry(args.site, args.login)
+
+
+    if args.option in ["usage", "u"]:  # If the user wants to add an entry
+        printc("[yellow]-[/yellow] When adding, site name, site url and site login are required")
+        printc("[yellow]-[/yellow] When deleting, site name and site login are required")
+        printc("[yellow]-[/yellow] When generating a password, specify it's length")
+
+    printc("[yellow][?][/yellow] Run 'python main.py -h' for help")
 
 
 if __name__ == "__main__":  # Making sure the function is called only if this module is called directly, and not when imported

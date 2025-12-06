@@ -33,7 +33,6 @@ def retrieve_entry(search):
 
     # Creation of table columns
     table = Table(title="Results")
-    table.add_column("entry number")
     table.add_column("Site Name")
     table.add_column("URL")
     table.add_column("Email")
@@ -41,7 +40,7 @@ def retrieve_entry(search):
     table.add_column("Password")
     # Using a loop to create a row for each result
     for i in results:  # Going over 'results' to add rows with the results of the query
-        table.add_row(str(i[0]), i[1], i[2], i[3], i[4], decrypt_pass(i[5]))
+        table.add_row(str(i[1]), i[2], i[3], i[4], decrypt_pass(i[5]))
 
     console = Console()
     console.print(table)
